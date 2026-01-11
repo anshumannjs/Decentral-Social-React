@@ -36,7 +36,7 @@ export const wagmiConfig = createConfig({
   //   [ANVIL_CHAIN.id]: http("http://127.0.0.1:8545")
   // }
   transports: {
-    [sepolia.id]: http("https://eth-sepolia.g.alchemy.com/v2/nXeLfgj4sqO7_m2-PGdJy")
+    [sepolia.id]: http(import.meta.env.VITE_ALCHEMY_SEPOLIA_RPC_URL)
   }
 });
 
