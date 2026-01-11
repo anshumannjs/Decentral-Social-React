@@ -38,28 +38,28 @@ export default function PostCardWithMedia({ post: initialPost, authorProfile }) 
   }
 };
 
-  useEffect(() => {
-    const pinataUrl=metadata?.contentUrl
-    const fetchHeader = async () => {
-      try {
-        // HEAD request only fetches metadata, saving bandwidth
-        const response = await fetch(pinataUrl, { method: 'HEAD' });
+  // useEffect(() => {
+  //   const pinataUrl=metadata?.contentUrl
+  //   const fetchHeader = async () => {
+  //     try {
+  //       // HEAD request only fetches metadata, saving bandwidth
+  //       const response = await fetch(pinataUrl, { method: 'HEAD' });
         
-        if (response.ok) {
-          // Extract the Content-Type header
-          const contentType = response.headers.get("Content-Type");
-          setFileType(categorizeMimeType(contentType) || 'Unknown');
-        } else {
-          setFileType('Error: Link invalid');
-        }
-      } catch (error) {
-        console.error("Fetch failed:", error);
-        setFileType('CORS Error / Unavailable');
-      }
-    };
+  //       if (response.ok) {
+  //         // Extract the Content-Type header
+  //         const contentType = response.headers.get("Content-Type");
+  //         setFileType(categorizeMimeType(contentType) || 'Unknown');
+  //       } else {
+  //         setFileType('Error: Link invalid');
+  //       }
+  //     } catch (error) {
+  //       console.error("Fetch failed:", error);
+  //       setFileType('CORS Error / Unavailable');
+  //     }
+  //   };
 
-    if (metadata?.contentUrl) fetchHeader();
-  }, [metadata?.contentUrl]);
+  //   if (metadata?.contentUrl) fetchHeader();
+  // }, [metadata?.contentUrl]);
 
   useEffect(() => {
     if (initialPost) setPost(initialPost);
@@ -218,7 +218,8 @@ console.log({post})
           {metadata.description && (
             <p className="text-gray-700">{metadata.description}</p>
           )}
-          {renderMedia()}
+          {/* {renderMedia()} */}
+          <img src={metadata?.contentUrl} alt="IPFS image" /> 
         </div>
       ) : null}
 
