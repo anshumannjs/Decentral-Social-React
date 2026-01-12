@@ -177,6 +177,38 @@ export default function PostCardWithMedia({ post: initialPost, authorProfile }) 
   };
 console.log({post})
 
+const IPFSImage = ({ url, alt }) => {
+  const gateways = [
+    "https://ipfs.io/ipfs/",
+    "https://dweb.link/ipfs/",
+    "https://gateway.pinata.cloud/ipfs/",
+  ];
+
+  const getCID = (url) => {
+    if (!url) return "";
+    if (url.startsWith("ipfs://")) return url.slice(7);
+    if (url.includes("/ipfs/")) return url.split("/ipfs/")[1];
+    return url;
+  };
+  const cid=getCID(url);
+
+  const [index, setIndex] = useState(0);
+
+  return (
+    <img
+      src={`${gateways[index]}${cid}`}
+      alt={alt}
+      onError={() => {
+        if (index < gateways.length - 1) {
+          setIndex(index + 1);
+        }
+      }}
+      loading="lazy"
+    />
+  );
+};
+
+
 
   return (
     <div className="card hover:shadow-md transition-shadow">
@@ -220,6 +252,7 @@ console.log({post})
           )}
           {/* {renderMedia()} */}
           <img src={metadata?.contentUrl} alt="IPFS image" /> 
+          <IPFSImage url={metadata?.contentUrl} alt="IPFS image"/>
         </div>
       ) : null}
 
